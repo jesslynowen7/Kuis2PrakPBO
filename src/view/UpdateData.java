@@ -10,18 +10,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class MenuRegistrasi {
+public class UpdateData {
     JFrame frame;
     JLabel labelNama, labelEmail, labelPassword, labelKategori;
     JTextField tfNama, tfEmail;
     JPasswordField pfPassword;
-    JButton btnBack, btnRegistrasi;
+    JButton btnBack, btnUpdate, btnDelete;
     JComboBox cbKategori;
 
-    public MenuRegistrasi(){
+    public UpdateData(User user){
+        Controller con = new Controller();
+
         //Frame
         frame = new JFrame("Menu Registrasi");
-        frame.setSize(460, 500);
+        frame.setSize(500, 500);
 
         //label
         labelNama = new JLabel("Nama");
@@ -38,13 +40,13 @@ public class MenuRegistrasi {
         labelKategori.setFont(new Font("Arial", Font.PLAIN, 16));
 
         //Text field
-        tfNama = new JTextField();
+        tfNama = new JTextField(user.getName());
         tfNama.setBounds(180,50,200,30);
-        tfEmail = new JTextField();
+        tfEmail = new JTextField(user.getEmail());
         tfEmail.setBounds(180,110,200,30);
 
         //Password field
-        pfPassword = new JPasswordField();
+        pfPassword = new JPasswordField(user.getPassword());
         pfPassword.setBounds(180,170,200,30);
 
         //combo box
@@ -67,38 +69,25 @@ public class MenuRegistrasi {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new MainMenu(new User());
+                new MainMenu(user);
             }
         });
-        btnRegistrasi = new JButton("Registrasi");
-        btnRegistrasi.setBounds(200,320,140,30);
-        btnRegistrasi.setFont(new Font("Arial", Font.BOLD, 16));
-        btnRegistrasi.addActionListener(new ActionListener() {
+        btnUpdate = new JButton("Update");
+        btnUpdate.setBounds(200,320,120,30);
+        btnUpdate.setFont(new Font("Arial", Font.BOLD, 16));
+        btnUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String password="";
-                char[] pass=pfPassword.getPassword();
-                if(!tfNama.getText().equals("")&& !tfEmail.getText().equals("")){
-                    if(pass.length<8){
-                        JOptionPane.showMessageDialog(null, "Password kurang dari 8");
-                    }else{
-                        for (int j=0; j<pass.length; j++){
-                            password+=pass[j];
-                        }
-                        User user = new User(0, tfNama.getText(),tfEmail.getText(),password,cbKategori.getSelectedIndex()+1);
-                        boolean insert = controller.insertNewUser(user);
-                        if (insert) {
-                            JOptionPane.showMessageDialog(null, "Registrasi Berhasil");
-                            frame.dispose();
-                            new MainMenu(new User());
-                        }else{
-                            JOptionPane.showMessageDialog(null, "Registrasi gagal");
-                        }
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(null, "Isi Fiels kosong");
-                }
-
+//
+            }
+        });
+        btnDelete = new JButton("Delete");
+        btnDelete.setBounds(340,320,100,30);
+        btnDelete.setFont(new Font("Arial", Font.BOLD, 16));
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//
             }
         });
 
@@ -111,7 +100,8 @@ public class MenuRegistrasi {
         frame.add(pfPassword);
         frame.add(cbKategori);
         frame.add(btnBack);
-        frame.add(btnRegistrasi);
+        frame.add(btnUpdate);
+        frame.add(btnDelete);
 
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);

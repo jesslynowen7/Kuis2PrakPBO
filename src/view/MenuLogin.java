@@ -51,7 +51,7 @@ public class MenuLogin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new MainMenu();
+                new MainMenu(new User());
             }
         });
         btnLogin = new JButton("Login");
@@ -63,7 +63,9 @@ public class MenuLogin {
                 Controller controller =  new Controller();
                 User user = controller.getUser(tfEmail.getText(),pfPassword.getPassword());
                 if(user!=null){
-                    //
+                    JOptionPane.showMessageDialog(null, "Login berhasil");
+                    frame.dispose();
+                    new MainMenu(user);
                 }else{
                     JOptionPane.showMessageDialog(null, "Username/Password salah");
                 }

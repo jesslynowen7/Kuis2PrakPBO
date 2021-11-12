@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import model.CategoryUser;
+import model.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,7 +41,7 @@ public class LihatDataPerKategori {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new MainMenu();
+                new MainMenu(new User());
             }
         });
 

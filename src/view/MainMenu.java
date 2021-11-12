@@ -1,5 +1,7 @@
 package view;
 
+import model.User;
+
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
@@ -8,9 +10,9 @@ import java.awt.event.ActionListener;
 
 public class MainMenu {
     JFrame frame;
-    JButton btnLogin, btnRegistrasi, btnLihatData;
+    JButton btnLogin, btnRegistrasi, btnLihatData, btnUpdateData;
 
-    public MainMenu(){
+    public MainMenu(User user){
         //Button
         btnLogin = new JButton("Login Pengguna");
         btnLogin.setBounds(100, 60, 400, 80);
@@ -47,14 +49,27 @@ public class MainMenu {
             }
         });
 
+        btnUpdateData = new JButton("Update Data");
+        btnUpdateData.setBounds(100, 450, 400, 80);
+        btnUpdateData.setFont(new Font("Arial", Font.BOLD, 16));
+        btnUpdateData.setBorder(new BevelBorder(1, Color.BLACK, Color.BLACK));
+        btnUpdateData.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new UpdateData(user);
+            }
+        });
+
         //Frame
         frame = new JFrame("Main Menu");
-        frame.setSize(600, 500);
+        frame.setSize(600, 600);
 
 
         frame.add(btnLogin);
         frame.add(btnRegistrasi);
         frame.add(btnLihatData);
+        frame.add(btnUpdateData);
 
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);

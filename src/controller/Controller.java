@@ -62,6 +62,21 @@ public class Controller {
         return (user);
     }
 
+    // UPDATE
+    public static boolean updateUser(User user) {
+        conn.connect();
+        String query = "UPDATE user SET name='" + user.getName() + "', "
+                + "email='" + user.getEmail() + "', ";
+        try {
+            Statement stmt = conn.con.createStatement();
+            stmt.executeUpdate(query);
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+
     public static ArrayList<CategoryUser> getKategori() {
         conn.connect();
         String query = "SELECT * FROM categoryuser";
