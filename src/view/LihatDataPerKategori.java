@@ -51,7 +51,7 @@ public class LihatDataPerKategori {
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new TampilkanDataUser(cbKategori.getSelectedIndex()-1);
+                new TampilkanDataUser(cbKategori.getSelectedIndex()+1);
             }
         });
 
