@@ -37,6 +37,28 @@ public class Controller {
         return (users);
     }
 
+    public static ArrayList<User> getAllUsers(int category) {
+        ArrayList<User> users = new ArrayList<>();
+        conn.connect();
+        String query = "SELECT * FROM user WHERE idCategory='" + category + "'";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                User user = new User();
+                user.setIdUser(rs.getInt("idUser"));
+                user.setName(rs.getString("name"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password"));
+                user.setIdCategory(rs.getInt("idCategory"));
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (users);
+    }
+
     // SELECT WHERE
     public static User getUser(String email, char[] pass) {
         conn.connect();

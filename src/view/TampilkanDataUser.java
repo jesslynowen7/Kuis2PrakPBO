@@ -7,7 +7,7 @@ import javax.swing.*;
 public class TampilkanDataUser {
     JFrame frame;
 
-    public TampilkanDataUser(){
+    public TampilkanDataUser(int kategori){
         //Frame
         frame = new JFrame("Tampilkan data");
         frame.setSize(800, 800);
@@ -16,7 +16,7 @@ public class TampilkanDataUser {
         JPanel panel= new JPanel();
         panel.setBounds(0,0 , 1200, 1200);
 
-        String [][] dataUser=controller.konversiListToArray(controller.getAllUsers());
+        String [][] dataUser=controller.konversiListToArray(controller.getAllUsers(kategori));
 
         //init kolom
         String column[]={"idUser","Nama","Email","Password","idCategory"};
