@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 import model.CategoryUser;
 import model.User;
+import model.UserManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -67,7 +68,7 @@ public class MenuRegistrasi {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new MainMenu(new User());
+                new MainMenu(new UserManager().getInstance().getUser());
             }
         });
         btnRegistrasi = new JButton("Registrasi");
@@ -90,7 +91,7 @@ public class MenuRegistrasi {
                         if (insert) {
                             JOptionPane.showMessageDialog(null, "Registrasi Berhasil");
                             frame.dispose();
-                            new MainMenu(new User());
+                            new MainMenu(new UserManager().getInstance().getUser());
                         }else{
                             JOptionPane.showMessageDialog(null, "Registrasi gagal");
                         }

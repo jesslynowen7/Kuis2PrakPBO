@@ -41,7 +41,6 @@ public class LihatDataPerKategori {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new MainMenu(new User());
             }
         });
 

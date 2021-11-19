@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import model.User;
+import model.UserManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +52,7 @@ public class MenuLogin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new MainMenu(new User());
+                new MainMenu(new UserManager().getInstance().getUser());
             }
         });
         btnLogin = new JButton("Login");
@@ -61,11 +62,12 @@ public class MenuLogin {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Controller controller =  new Controller();
-                User user = controller.getUser(tfEmail.getText(),pfPassword.getPassword());
-                if(user!=null){
+                String pass = String.valueOf(pfPassword.getPassword());
+                controller.LogIn(tfEmail.getText(),pass);
+                if(new UserManager().getInstance().getUser()!=null){
                     JOptionPane.showMessageDialog(null, "Login berhasil");
                     frame.dispose();
-                    new MainMenu(user);
+                    new MainMenu(new UserManager().getInstance().getUser());
                 }else{
                     JOptionPane.showMessageDialog(null, "Username/Password salah");
                 }

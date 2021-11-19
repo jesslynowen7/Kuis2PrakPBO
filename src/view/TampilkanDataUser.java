@@ -3,6 +3,7 @@ package view;
 import controller.Controller;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TampilkanDataUser {
     JFrame frame;
@@ -13,8 +14,6 @@ public class TampilkanDataUser {
         frame.setSize(800, 800);
 
         Controller controller = new Controller();
-        JPanel panel= new JPanel();
-        panel.setBounds(0,0 , 1200, 1200);
 
         String [][] dataUser=controller.konversiListToArray(controller.getAllUsers(kategori));
 
@@ -23,10 +22,12 @@ public class TampilkanDataUser {
 
         //tabel data
         JTable tabelUser=new JTable(dataUser,column);
-        tabelUser.setBounds(0,0,1200,1200);
         JScrollPane sp=new JScrollPane(tabelUser);
-        panel.add(sp);
-        frame.add(panel);
+        sp.setBounds(0, 0, 780, 700);
+
+        JPanel contentPane = new JPanel(null);
+        contentPane.add(sp);
+        frame.setContentPane(contentPane);
 
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);

@@ -10,32 +10,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.User;
+import model.UserManager;
 
 public class Controller {
     static DatabaseHandler conn = new DatabaseHandler();
-
-    // SELECT ALL from table user
-    public static ArrayList<User> getAllUsers() {
-        ArrayList<User> users = new ArrayList<>();
-        conn.connect();
-        String query = "SELECT * FROM user";
-        try {
-            Statement stmt = conn.con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                User user = new User();
-                user.setIdUser(rs.getInt("idUser"));
-                user.setName(rs.getString("name"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-                user.setIdCategory(rs.getInt("idCategory"));
-                users.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return (users);
-    }
 
     public static ArrayList<User> getAllUsers(int category) {
         ArrayList<User> users = new ArrayList<>();
@@ -60,13 +38,9 @@ public class Controller {
     }
 
     // SELECT WHERE
-    public static User getUser(String email, char[] pass) {
+    public static void LogIn(String email, String pass) {
         conn.connect();
-        String password="";
-        for (int i=0; i<pass.length; i++){
-            password+=pass[i];
-        }
-        String query = "SELECT * FROM user WHERE email='"+ email + "'&&password='" + password + "'";
+        String query = "SELECT * FROM user WHERE email='" + email + "' AND password = '" + pass + "'";
         User user = new User();
         try {
             Statement stmt = conn.con.createStatement();
@@ -77,21 +51,24 @@ public class Controller {
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setIdCategory(rs.getInt("idCategory"));
+                new UserManager().getInstance().setUser(user);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return (user);
     }
 
     // UPDATE
-    public static boolean updateUser(User user) {
+    public static boolean updateUser(String nama, String email, int idCategory, int idUser) {
         conn.connect();
-        String query = "UPDATE user SET name='" + user.getName() + "', "
-                + "email='" + user.getEmail() + "', ";
+        String query = "update user set name = ?, email = ?, idCategory = ? where idUser = ?";
         try {
-            Statement stmt = conn.con.createStatement();
-            stmt.executeUpdate(query);
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setString(1, nama);
+            stmt.setString(2, email);
+            stmt.setInt(3, idCategory);
+            stmt.setInt(4, idUser);
+            stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,5 +124,34 @@ public class Controller {
             hasil[i][4]=Integer.toString(currentUser.getIdCategory());
         }
         return hasil;
+    }
+
+    public static boolean deleteUser(int idUser) {
+        conn.connect();
+
+        String query = "DELETE FROM user WHERE idUser='" + idUser + "'";
+        try {
+            Statement stmt = conn.con.createStatement();
+            stmt.executeUpdate(query);
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+
+    public boolean cekUserDiDataBase(String email) {
+        conn.connect();
+        String query = "SELECT * FROM user WHERE email='" + email + "'";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                return (true);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (false);
     }
 }

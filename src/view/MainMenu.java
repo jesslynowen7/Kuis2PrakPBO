@@ -1,6 +1,7 @@
 package view;
 
 import model.User;
+import model.UserManager;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -21,6 +22,7 @@ public class MainMenu {
         btnLogin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                new UserManager().getInstance().setUser(null);
                 frame.dispose();
                 new MenuLogin();
             }
@@ -56,8 +58,12 @@ public class MainMenu {
         btnUpdateData.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new UpdateData(user);
+                if(user!=null){
+                    frame.dispose();
+                    new UpdateData(user);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Silahkan Login.");
+                }
             }
         });
 
